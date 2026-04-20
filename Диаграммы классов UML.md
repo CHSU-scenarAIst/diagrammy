@@ -1,23 +1,240 @@
-# UML Диаграмма Классов — DiplomDb System
+# Диаграммы классов UML
 
-## Условные обозначения
+## Контекстная диаграмма классов
 
-| Символ | Значение |
-|--------|----------|
-| `+` | public |
-| `-` | private |
-| `#` | protected |
-| `~` | internal |
-| `<<abstract>>` | абстрактный класс |
-| `<<interface>>` | интерфейс |
-| `<<static>>` | статический класс |
-| `*` | множество (0..* или 1..*) |
-| `0..1` | ноль или один |
-| `1` | ровно один |
-
+```mermaid
 ---
+title: Контекстная диаграмма классов пакета "Обработка эмбеддингов"
+---
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#fff', 'edgeColor': '#000', 'lineColor': '#000', 'actorTextColor': '#000'}}}%%
+graph TD
+    %% Узлы
+    ST[Стандарты]
+    SC[Сценаристы]
+    ND[Нормативные документы]
+    ZR[Запросы]
+    BZ[База знаний производства]
+    AI[Модель искусственного интеллекта]
+    DE[Действия]
+    SN[Сценарии]
+    PL[Пользователи]
+    VR[VR-тренажёры]
 
-## UML Class Diagram
+    %% Связи с подписями
+    ST -- "Регламентируют" --> ND
+    SC -- "Определяют" --> ND
+    SC -- "Отправляют" --> ZR
+    ND -- "Формируют" --> BZ
+    ZR -- "Управляют" --> AI
+    BZ -- "Утверждает" --> DE
+    AI -- "Генерирует" --> SN
+    DE -- "Содержат" --> SN
+    PL -- "Выбирают" --> SN
+    PL -- "Используют" --> VR
+    SN -- "Используют" --> VR
+
+    %% Стилизация для прямоугольников
+    style ST fill:#fff,stroke:#000
+    style SC fill:#fff,stroke:#000
+    style ND fill:#fff,stroke:#000
+    style ZR fill:#fff,stroke:#000
+    style BZ fill:#fff,stroke:#000
+    style AI fill:#fff,stroke:#000
+    style DE fill:#fff,stroke:#000
+    style SN fill:#fff,stroke:#000
+    style PL fill:#fff,stroke:#000
+    style VR fill:#fff,stroke:#000
+```
+
+## Исходная диаграмма классов
+
+### Пакет "Обработка эмбеддингов"
+
+```mermaid
+---
+title: Исходная диаграмма классов пакета "Обработка эмбеддингов"
+---
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#fff', 'edgeColor': '#000', 'lineColor': '#000', 'actorTextColor': '#000'}}}%%
+classDiagram
+    class АгентLLM
+    class КлиентLLM
+    class ИндексLLM
+    class ИнтерфейсИндекса
+    class ЭмбеддингДокументов
+    class ЗагрузчикФайлов
+    class Чат
+    class ИнтерфейсЧата
+    class ОбъектыЗапросов
+    class API
+    class Конфигурация
+
+    АгентLLM -- КлиентLLM
+    АгентLLM -- ИндексLLM
+    ИндексLLM -- ИнтерфейсИндекса
+    ИндексLLM -- ЭмбеддингДокументов
+    ЭмбеддингДокументов -- ЗагрузчикФайлов
+    Чат -- ИнтерфейсЧата
+    Чат -- ОбъектыЗапросов
+    API -- ИнтерфейсЧата
+    API -- Конфигурация
+    API -- АгентLLM
+```
+
+### Пакет ...
+
+## Уточнённая диаграмма классов
+
+### Пакет "Обработка эмбеддингов"
+
+```mermaid
+---
+title: Уточнённая диаграмма классов пакета "Обработка эмбеддингов"
+---
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#fff', 'edgeColor': '#000', 'lineColor': '#000', 'actorTextColor': '#000'}}}%%
+classDiagram
+    class АгентLLM
+    class КлиентLLM
+    class ИндексLLM
+    class ИнтерфейсИндекса
+    class ЭмбеддингДокументов
+    class ЗагрузчикФайлов
+    class Чат
+    class ИнтерфейсЧата
+    class ОбъектыЗапросов
+    class API
+    class Конфигурация
+
+    АгентLLM "1" o-- "1" КлиентLLM
+    АгентLLM "1" --> "1" ИндексLLM
+
+    ИндексLLM "1" ..|> "1" ИнтерфейсИндекса
+    ИндексLLM "1" *-- "*" ЭмбеддингДокументов
+    
+    ЭмбеддингДокументов ..> ЗагрузчикФайлов
+    
+    Чат ..|> ИнтерфейсЧата
+    Чат "1" --> "*" ОбъектыЗапросов
+    
+    API "1" --> "1" ИнтерфейсЧата
+    API "1" --> "1" Конфигурация
+    API "1" --> "1" АгентLLM
+```
+
+## Детальная диаграмма классов
+
+### Условные обозначения
+
+| Символ          | Значение                  |
+| --------------- | ------------------------- |
+| `+`             | public                    |
+| `-`             | private                   |
+| `#`             | protected                 |
+| `~`             | internal                  |
+| `<<abstract>>`  | абстрактный класс         |
+| `<<interface>>` | интерфейс                 |
+| `<<static>>`    | статический класс         |
+| `*`             | множество (0..* или 1..*) |
+| `0..1`          | ноль или один             |
+| `1`             | ровно один                |
+
+### Пакет "Обработка эмбеддингов"
+
+```mermaid
+---
+title: Детальная диаграмма классов пакета "Обработка эмбеддингов"
+---
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#fff', 'edgeColor': '#000', 'lineColor': '#000', 'actorTextColor': '#000'}}}%%
+classDiagram    
+    %% Interface
+    class Config {
+        +base_url String
+		+api_key String
+		+chat_model_id String
+		+system_prompt String
+		+temperature f64
+		+embed_model_id String
+		+max_tokens u64
+		+chunk_size usize
+		chunk_overlap usize
+		+qdrant_url Option<String>
+		+top_k usize
+		+documents_path String
+		+host String
+		+port String
+        +init() Result~Self~
+    }
+    
+    class IChat {
+        <<interface>>
+        +chat_with_history(history, buffer, input) Arc~...~
+        +chat_with_typed(input) String
+    }
+    
+    %% Implementations
+    class LlmIndex {
+        +index : IVectorIndex
+        +new(embed_model, documents_path, qdrant_url, chunk_size, chunk_overlap) Result~Self~
+    }
+
+    class EmbedDocs {
+        +id : Uuid
+        +created_at : i64
+        +file_path : String
+        +file_name : String
+        +content : String
+        +context_chunk : String
+        +new() Result~Vec~...~~
+    }
+    
+    class FileLoaders {
+	    +from_utf8_file(path, extention) Result~Box~dyn Iterator~...~~~
+	    +from_pdf(path) Result~Box~dyn Iterator~...~~~
+    }
+    
+    class Chat~M~ {
+        +Agent~M~ agent
+        +chat_with_history(chat_history, response_text, query) Arc~...~
+        +chat_with_typed(city) String
+    }
+    
+    class IVectorIndex{
+	    <<interface>>
+	    -top_n(req) WasmBoxedFuture~...~
+	    -top_n_ids(req) WasmBoxedFuture~...~
+    }
+
+    class Api {
+		+chat_history Arc~...~
+		+chat Box~dyn IChat~
+		-index() -> Result~...>
+	    -search(query) -> Result~...~
+    }
+    
+    class LlmAgent {
+	    +new(config) Result~Agent~...~~
+    }
+    
+    class LlmClient {
+	    +new(base_url, api_key) Result<Self>
+    }
+
+    %% Relations
+    Chat~M~ ..|> IChat
+    
+    LlmIndex "1" ..|> "1" IVectorIndex
+    LlmIndex "1" *-- "*" EmbedDocs
+    
+    LlmAgent "1" --> "1" LlmIndex
+    LlmAgent "1" o-- "1" LlmClient
+    
+    Api "1" --> "1" IChat
+    Api "1" --> "1" Config
+    Api "1" --> "1" LlmAgent
+
+    EmbedDocs ..> FileLoaders
+```
+
+### Пакет "..."
 
 ```mermaid
 classDiagram
@@ -744,24 +961,21 @@ classDiagram
     BeautifulBuilderService ..> IValidationMarker : использует
 ```
 
----
+### Шаблон описания детальной диаграммы классов
 
-## Сводная таблица классов по слоям
+Таблица ...
+Описание полей класса «...»
 
-| Слой | Классы | Кол-во |
-|------|--------|--------|
-| **Domain — Entities** | BaseEntity, ActionEntity, ScenarioEntity, StepEntity, ScenarioStepEntity, ObjectEntity, SessionEntity | 7 |
-| **Domain — Repository Interfaces** | IActionRepository, IScenarioRepository, IStepRepository, IScenarioStepRepository, IObjectRepository, ISessionRepository | 6 |
-| **Domain — Specifications** | ActiveEntitiesSpec~T~, ActionsByIdsSpec, ScenariosWithActionsSpec, ScenariosByParentIdSpec, StepsByActionIdSpec, ObjectsByNameSpec, SessionsByScenarioIdSpec, ScenarioStepsByScenarioIdSpec, StepsWithActionsAndObjectsSpec | 9 |
-| **DataAccess — Context** | ApplicationDbContext | 1 |
-| **DataAccess — Configurations** | BaseEntityConfiguration~T~, ActionConfiguration, ObjectConfiguration, ScenarioConfiguration, StepConfiguration, SessionConfiguration, ScenarioStepConfiguration | 7 |
-| **DataAccess — Repositories** | ActionRepository, ObjectRepository, ScenarioRepository, StepRepository, ScenarioStepRepository, SessionRepository | 6 |
-| **DataAccess — Utilities** | BeautifulDataAccess | 1 |
-| **DTO — Requests** | CreateScenarioRequest, CreateActionRequest, CreateObjectRequest, CreateStepRequest, CreateScenarioStepRequest, CreateSessionRequest | 6 |
-| **DTO — Responses** | ActionResponse, ScenarioResponse, ObjectResponse, StepResponse, ScenarioStepResponse, SessionResponse | 6 |
-| **DTO — Validators** | CreateScenarioValidator, IValidationMarker | 2 |
-| **API — Service Interfaces** | IBaseService~TEntity,TRequest,TResponse~, IActionService, IScenarioService, IObjectService, IStepService, IScenarioStepService, ISessionService | 7 |
-| **API — Service Implementations** | BaseService~TEntity,TRequest,TResponse~, ActionService, ScenarioService, ObjectService, StepService, ScenarioStepService, SessionService | 7 |
-| **API — Controllers** | ActionController, ScenarioController, ObjectController, StepController, ScenarioStepController, SessionController | 6 |
-| **API — Other** | BeautifulBuilderService, MappingProfile | 2 |
-| **ИТОГО** | | **79** |
+| Название | Тип  | Описание                     |
+| -------- | ---- | ---------------------------- |
+| Id       | Uuid | Уникальный идентификатор ... |
+| …        | …    | …                            |
+
+Таблица ...
+
+Описание методов класса «…»
+
+| Название | Параметры | Возвр.знач.    | Описание                                         |
+| -------- | --------- | -------------- | ------------------------------------------------ |
+| init     | -         | Result\<Self\> | Получить данные конфига из переменных окружения. |
+| …        | …         | …              | …                                                |
