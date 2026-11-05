@@ -1,4 +1,6 @@
 {
   "promptDelete": false,
-  "showInlineTitle": false
+  "showInlineTitle": false,
+  "readableLineLength": false,
+  "useMarkdownLinks": true
 }
